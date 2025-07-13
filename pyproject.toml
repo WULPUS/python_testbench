@@ -1,0 +1,16 @@
+[project]
+name = "testbench"
+version = "0.1.0"
+description = "Testbench Runner"
+classifiers = ["Private :: Do Not Upload"]
+readme = "README.md"
+authors = [{ name = "Cédric Hirschi", email = "cedrichirschi.21@gmail.com" }]
+requires-python = ">=3.12"
+dependencies = ["dotenv>=0.9.9", "pyyaml>=6.0.2"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/testbench"]
