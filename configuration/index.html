@@ -775,8 +775,8 @@
 </span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
 </span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="nt">tasks</span><span class="p">:</span>
 </span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">  </span><span class="nt">program_stm</span><span class="p">:</span><span class="w">   </span><span class="kt">!inc</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">config/tasks/program_stm.yml</span>
-</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">  </span><span class="nt">test_frontend</span><span class="p">:</span><span class="w"> </span><span class="kt">!inc</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">config/tasks/build_prog_wulpus_msp.yml</span>
-</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">  </span><span class="nt">deploy_keys</span><span class="p">:</span><span class="w">   </span><span class="kt">!inc</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">config/tasks/build_prog_dongle.yml</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">  </span><span class="nt">test_frontend</span><span class="p">:</span><span class="w"> </span><span class="kt">!inc</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">config/tasks/test_frontend.yml</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">  </span><span class="nt">deploy_keys</span><span class="p">:</span><span class="w">   </span><span class="kt">!inc</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">config/tasks/deploy_keys.yml</span>
 </span></code></pre></div>
 <blockquote>
 <p>[!NOTE]
@@ -819,9 +819,7 @@ The <code>!inc</code> directive is used to include other YAML files in the confi
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">registry/files</span>
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="nt">makefile</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Makefile</span>
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="nt">emproject</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">EmProject</span>
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="nt">c_header</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CHeader</span>
-</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="nt">c_source</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CSource</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="nt">cmakelists</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CMakeLists</span>
 </span></code></pre></div>
 <h2 id="toolsyml"><a href="config/tools.yml"><code>tools.yml</code></a><a class="headerlink" href="#toolsyml" title="Permanent link">&para;</a></h2>
 <p>This configuration file contains all tools available to the testbench. A tool is a means for the testbench to run a command on the system, such as a compiler or a flasher by describing it using a Python class.</p>
