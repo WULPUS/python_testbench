@@ -1,5 +1,7 @@
 site_name: Testbench Runner
 site_url: https://wulpus.github.io/python_testbench/
+site_description: A simple Python testbench framework.
+site_author: Cedric Hirschi
 repo_name: python_testbench
 repo_url: https://github.com/WULPUS/python_testbench
 
