@@ -6,7 +6,11 @@ classifiers = ["Private :: Do Not Upload"]
 readme = "README.md"
 authors = [{ name = "Cédric Hirschi", email = "cedrichirschi.21@gmail.com" }]
 requires-python = ">=3.12"
-dependencies = ["dotenv>=0.9.9", "pyyaml>=6.0.2"]
+dependencies = [
+    "dotenv>=0.9.9",
+ "pyyaml>=6.0.2",
+ "pyyaml-include>=2.2",
+]
 
 [build-system]
 requires = ["hatchling"]
