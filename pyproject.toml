@@ -18,3 +18,8 @@ build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/testbench"]
+
+[dependency-groups]
+dev = [
+    "mkdocs-material[imaging]>=9.6.15",
+]
