@@ -30,20 +30,38 @@ class Testbench:
             self.__output_base_dir = Path(output_dir)
         else:
             self.__output_base_dir = Path("output")
-        if not self.__output_base_dir.exists():
-            self.__output_base_dir.mkdir()
+        self.__output_base_dir.mkdir(parents=True, exist_ok=True)
 
         self.__output_dir = self.__output_base_dir / time.strftime("%Y%m%d-%H%M%S")
         self.__output_dir.mkdir()
-
         self.log.info(f"Output directory: '{self.__output_dir}'")
 
         # Copy config file to output directory
-        shutil.copy(self.__config_path, self.__output_dir / self.__config_path.name)
-
+        config_output_dir = self.__output_dir / "config"
+        config_output_dir.mkdir(parents=True, exist_ok=True)
+        shutil.copy(self.__config_path, config_output_dir / self.__config_path.name)
         self.log.debug(
-            f"Copied '{self.__config_path}' to '{self.__output_dir / self.__config_path.name}'"
+            f"Copied '{self.__config_path}' to '{config_output_dir / self.__config_path.name}'"
         )
+
+        # Go through the config and copy all includes
+        includes_output_dir = config_output_dir / "includes"
+        includes_output_dir.mkdir(parents=True, exist_ok=True)
+        with open(self.__config_path, "r") as f:
+            lines = f.readlines()
+        for i, line in enumerate(lines):
+            if "!inc" in line:
+                include_path = line.split("!inc")[1].strip()
+                self.log.debug(f"Copying include: {include_path}")
+                shutil.copy(
+                    include_path,
+                    includes_output_dir / Path(include_path).name,
+                )
+
+        # Copy full config to output directory
+        with open(self.__output_dir / "config.yml", "w") as f:
+            yaml.dump(self.__config, f, default_flow_style=False)
+        self.log.debug(f"Copied full config to '{self.__output_dir / 'config.yml'}'")
 
         try:
             self.__env = None
