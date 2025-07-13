@@ -39,7 +39,14 @@ class File:
         shutil.copyfile(self.__file_backup, self.output_dir / self.__file_backup.name)
 
     def parse(self) -> None:
-        raise NotImplementedError
+        with open(self.file, "r") as f:
+            for i, line in enumerate(f):
+                for key in self.configs:
+                    if key.strip() in line:
+                        if key not in self.replacements:
+                            self.replacements[key] = []
+
+                        self.replacements[key].append((i, self.configs[key.strip()]))
 
     def __replace(self) -> None:
         lines = []
