@@ -111,7 +111,7 @@ Running the testbench with the added tool will produce the following output in t
 
 ```log
 [12:00:00] INFO     Testbench:                                               testbench.py:27
-                    'C:\dev\github\wulpus_testbench\config\testbench.yml'                   
+                    'C:\dev\testbench\config\testbench.yml'                   
            INFO     Output directory: 'output\20250101-120000'               testbench.py:37
            INFO     Tools: 'registry\tools'                                      tools.py:16
            INFO     Initialized 3 tool types with 9 tools                        tools.py:24

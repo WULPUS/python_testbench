@@ -25,8 +25,8 @@ registry:
 
 tasks:
   program_stm:   !inc config/tasks/program_stm.yml
-  test_frontend: !inc config/tasks/build_prog_wulpus_msp.yml
-  deploy_keys:   !inc config/tasks/build_prog_dongle.yml
+  test_frontend: !inc config/tasks/test_frontend.yml
+  deploy_keys:   !inc config/tasks/deploy_keys.yml
 ```
 
 > [!NOTE]
@@ -87,9 +87,7 @@ Here is an example of a `files.yml` file:
 path: registry/files
 
 makefile: Makefile
-emproject: EmProject
-c_header: CHeader
-c_source: CSource
+cmakelists: CMakeLists
 ```
 
 
