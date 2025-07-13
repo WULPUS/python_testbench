@@ -5,6 +5,8 @@ from typing import Optional
 import logging
 
 from dotenv import load_dotenv, dotenv_values
+import yaml
+import yaml_include
 
 from .common.config import load_config
 from .tools import TestbenchTools
@@ -18,6 +20,8 @@ class Testbench:
         self, config_path: Path | str, output_dir: Optional[Path | str] = None
     ):
         self.log = logging.getLogger("testbench")
+
+        yaml.add_constructor("!inc", yaml_include.Constructor(), yaml.SafeLoader)
 
         self.__config_path, self.__config = load_config(config_path)
         self.log.info(f"Testbench: '{self.__config_path}'")
@@ -48,16 +52,12 @@ class Testbench:
             raise ValueError(f"Error setting up environment: {e}")
 
         try:
-            self.__tools = TestbenchTools(
-                str(self.__get("tools")), self.__output_dir
-            ).get()
+            self.__tools = TestbenchTools(self.__get("registry/tools")).get()
         except Exception as e:
             raise ValueError(f"Error setting up tools: {e}")
 
         try:
-            self.__files = TestbenchFiles(
-                str(self.__get("files")), self.__output_dir
-            ).get()
+            self.__files = TestbenchFiles(self.__get("registry/files")).get()
         except Exception as e:
             raise ValueError(f"Error setting up files: {e}")
 
@@ -70,10 +70,9 @@ class Testbench:
 
         try:
             self.__schedule = TestbenchSchedule(
-                str(self.__get("schedule")),
+                self.__get("schedule"),
                 self.__tools,
                 self.__tasks,
-                self.__output_dir,
             )
         except Exception as e:
             raise ValueError(f"Error setting up schedule: {e}")
@@ -81,9 +80,20 @@ class Testbench:
         self.log.info("Initialized testbench")
 
     def __get(self, key: str) -> dict:
-        if key not in self.__config:
-            raise KeyError(f'Key "{key}" not found in configuration')
-        return self.__config[key]
+        if "/" not in key:
+            if key not in self.__config:
+                raise KeyError(f'Key "{key}" not found in configuration')
+            return self.__config[key]
+        else:
+            keys = key.split("/")
+            temp = self.__config.copy()
+            for k in keys[:-1]:
+                if k not in temp:
+                    raise KeyError(f'Key "{k}" not found in configuration')
+                temp = temp[k]
+            if keys[-1] not in temp:
+                raise KeyError(f'Key "{keys[-1]}" not found in configuration')
+            return temp[keys[-1]]
 
     def __handle_env(self):
         self.log.debug("Handling environment variables")
@@ -166,10 +176,12 @@ class Testbench:
         return self.__tasks
 
     def __del__(self) -> None:
-        for task_name in self.__tasks:
-            task = self.__tasks[task_name]
-            for file in list(task["files"].keys()):
-                del task["files"][file]
+        if hasattr(self, "__tasks"):
+            self.log.debug("Cleaning up files")
+            for task_name in self.__tasks:
+                task = self.__tasks[task_name]
+                for file in list(task["files"].keys()):
+                    del task["files"][file]
 
     def iterate(self) -> None:
         self.__schedule.iterate()

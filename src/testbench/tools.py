@@ -1,21 +1,12 @@
 from pathlib import Path
-import shutil
 import logging
-
-from .common.config import load_config
 
 
 class TestbenchTools:
-    def __init__(self, config_path: Path | str, output_dir: Path):
+    def __init__(self, config: dict):
         self.log = logging.getLogger("tools")
 
-        self.__config_path, self.__config = load_config(config_path)
-        self.__output_dir = output_dir
-
-        shutil.copy(self.__config_path, self.__output_dir / self.__config_path.name)
-        self.log.debug(
-            f"Copied '{self.__config_path}' to '{self.__output_dir / self.__config_path.name}'"
-        )
+        self.__config = config
 
         if "path" not in self.__config:
             raise KeyError("No path found in configuration")

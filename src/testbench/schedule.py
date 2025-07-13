@@ -1,29 +1,16 @@
-from pathlib import Path
-import shutil
 import time
 import threading
 from typing import Optional
 import logging
 
-from .common.config import load_config
-
 
 class TestbenchSchedule:
-    def __init__(
-        self, config_path: Path | str, tools: dict, tasks: dict, output_dir: Path
-    ):
+    def __init__(self, config: dict, tools: dict, tasks: dict):
         self.log = logging.getLogger("schedule")
 
-        self.__config_path, self.__config = load_config(config_path)
+        self.__config = config
         self.__tools = tools
         self.__tasks = tasks
-        self.__output_dir = output_dir
-        self.log.info(f"Schedule: '{self.__config_path}'")
-
-        shutil.copy(self.__config_path, self.__output_dir / self.__config_path.name)
-        self.log.debug(
-            f"Copied '{self.__config_path}' to '{self.__output_dir / self.__config_path.name}'"
-        )
 
         try:
             self.__parse_schedule()
