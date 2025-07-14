@@ -21,4 +21,5 @@ And then add the testbench via the command:
 uv add python_testbench
 ```
 
-Now, you can move to a [basic setup](basic_setup.md) to get started with the testbench.
+!!! success
+    Now, you can move to a [basic setup](basic_setup.md) to get started with the testbench.

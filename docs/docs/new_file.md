@@ -66,9 +66,10 @@ This means that the `USER_NAME` placeholder in the `greeting.txt` file was repla
 
 As well as `greeting.bak`, which is a backup of the original file before the replacement was made.
 
-> [!NOTE]
-> In the future, the functionality of directly writing to a file will be moved to the `File` base class, so that all file types can use it. This will make it easier to create new file types that need to write to a file. Also, we should be able to create new files and not relay on existing files, so that we can create files from scratch.
+!!! info
+    In the future, the functionality of directly writing to a file will be moved to the `File` base class, so that all file types can use it. This will make it easier to create new file types that need to write to a file. Also, we should be able to create new files and not relay on existing files, so that we can create files from scratch.
 
-To find out more about how to create and register new tools and tasks, see the [new tool](new_tool.md) documentation.
+!!! success
+    To find out more about how to create and register new tools and tasks, see the [new tool](new_tool.md) documentation.
 
-To find out more about the structure of the testbench, see the [structure](structure.md) documentation.
+    To find out more about the structure of the testbench, see the [structure](structure.md) documentation.

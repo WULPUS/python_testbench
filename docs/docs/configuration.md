@@ -6,7 +6,7 @@ The `testbench.yml` file must contain the `files`, `tools`, and `schedule` field
 
 Then, you can list all tasks to be executed under the `tasks` field.
 
-A task quite a long description. You can have the following fields:
+You can have the following fields:
 
 - `path`: Base path of the project which this path may describe, all other paths are relative to this path.
 - `tools`: Dictionary of tools to be used in the task, with some optional configurations for each tool.
@@ -29,10 +29,10 @@ tasks:
   deploy_keys:   !inc config/tasks/deploy_keys.yml
 ```
 
-> [!NOTE]
-> The `!inc` directive is used to include other YAML files in the configuration. This allows you to split the configuration into multiple files for better organization and maintainability.
->
-> You can also write the configuration directly in the `testbench.yml` file, but it is recommended to use the `!inc` directive to keep the configuration organized.
+!!! note
+    The `!inc` directive is used to include other YAML files in the configuration. This allows you to split the configuration into multiple files for better organization and maintainability.
+
+    You can also write the configuration directly in the `testbench.yml` file, but it is recommended to use the `!inc` directive to keep the configuration organized.
 
 
 ## Task Configuration
@@ -161,4 +161,5 @@ Here is an example of a `.env` file:
 PROJECT_PATH=C:/dev/company/cool_device
 ```
 
-To find out more about how to use the tools and files, see the [tools](tools.md) and [files](files.md) documentation.
+!!! success
+    To find out more about how to use the tools and files, see the [tools](new_tool.md) and [files](new_file.md) documentation.

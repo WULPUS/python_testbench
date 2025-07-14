@@ -135,9 +135,10 @@ Hello, Cedric!
 
 You can also see that the output directory is created with a timestamp, so you can run the testbench multiple times without overwriting the output.
 
-> [!NOTE]
-> All of this seems very complex and it is, but with a growing number of tools and files, it is necessary to keep the testbench organized and maintainable. The testbench is designed to be extensible, so you can easily add new tools and files without having to change the existing code.
+!!! info
+    All of this seems very complex and it is, but with a growing number of tools and files, it is necessary to keep the testbench organized and maintainable. The testbench is designed to be extensible, so you can easily add new tools and files without having to change the existing code.
 
-To find out more about how to create and register new files, see the [new file](new_file.md) documentation.
-
-To find out more about the structure of the testbench, see the [structure](structure.md) documentation.
+!!! success
+    To find out more about how to create and register new files, see the [new file](new_file.md) documentation.
+    
+    To find out more about the structure of the testbench, see the [structure](structure.md) documentation.

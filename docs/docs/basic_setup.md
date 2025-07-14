@@ -23,4 +23,5 @@ except Exception as e:
     print(f"Error running testbench: {e}")
 ```
 
-To see how to configure the testbench, see the [configuration](configuration.md) section.
+!!! success
+    To see how to configure the testbench, see the [configuration](configuration.md) section.
