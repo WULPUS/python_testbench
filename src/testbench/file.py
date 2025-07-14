@@ -63,7 +63,8 @@ class File:
             f.writelines(lines)
 
     def __del__(self) -> None:
-        self.__file_backup.replace(self.file)
+        if hasattr(self, "__file_backup") and self.__file_backup.exists():
+            self.__file_backup.replace(self.file)
 
     @property
     def path(self) -> Path:
