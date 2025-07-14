@@ -7,10 +7,10 @@ from .file import File
 
 
 class TestbenchFiles:
-    def __init__(self, root: str):
+    def __init__(self, root: Path):
         self.log = logging.getLogger("files")
 
-        self.__root = Path(root).resolve()
+        self.__root = root
         if not self.__root.is_dir():
             raise ValueError(f"Testbench root path {self.__root} is not a directory")
 

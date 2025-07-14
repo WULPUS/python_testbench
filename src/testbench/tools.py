@@ -7,10 +7,10 @@ from .tool import Tool
 
 
 class TestbenchTools:
-    def __init__(self, root: str):
+    def __init__(self, root: Path):
         self.log = logging.getLogger("tools")
 
-        self.__root = Path(root).resolve()
+        self.__root = root
         if not self.__root.is_dir():
             raise ValueError(f"Testbench root path {self.__root} is not a directory")
 

@@ -1,7 +1,7 @@
 from pathlib import Path
 import time
 import shutil
-from typing import Optional
+from typing import Optional, Any
 import logging
 
 from dotenv import load_dotenv, dotenv_values
@@ -70,12 +70,20 @@ class Testbench:
             raise ValueError(f"Error setting up environment: {e}")
 
         try:
-            self.__tools = TestbenchTools(self.__get("registry/tools")).get()
+            tools_dir = self.__get("registry/tools")
+            if tools_dir is None:
+                raise ValueError("No tools directory found in configuration")
+            tools_dir = Path(tools_dir).resolve()
+            self.__tools = TestbenchTools(tools_dir).get()
         except Exception as e:
             raise ValueError(f"Error setting up tools: {e}")
 
         try:
-            self.__files = TestbenchFiles(self.__get("registry/files")).get()
+            files_dir = self.__get("registry/files")
+            if files_dir is None:
+                raise ValueError("No files directory found in configuration")
+            files_dir = Path(files_dir).resolve()
+            self.__files = TestbenchFiles(files_dir).get()
         except Exception as e:
             raise ValueError(f"Error setting up files: {e}")
 
@@ -97,7 +105,7 @@ class Testbench:
 
         self.log.info("Initialized testbench")
 
-    def __get(self, key: str) -> dict:
+    def __get(self, key: str) -> Any:
         if "/" not in key:
             if key not in self.__config:
                 raise KeyError(f'Key "{key}" not found in configuration')
