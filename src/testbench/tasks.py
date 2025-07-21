@@ -17,12 +17,18 @@ class TestbenchTasks:
         except Exception as e:
             raise ValueError(f"Error setting up tasks: {e}")
 
-        self.log.info(
-            f"Initialized {len(self.__tasks)} tasks with {sum(len(v['tools']) for v in self.__tasks.values())} tools"
-        )
+        if not self.__tasks:
+            self.log.warning("No task configurations provided")
+        else:
+            self.log.info(
+                f"Initialized {len(self.__tasks)} tasks with {sum(len(v['tools']) for v in self.__tasks.values())} tools"
+            )
 
     def __parse_tasks(self) -> None:
         self.log.debug("Parsing tasks configuration")
+
+        if self.__config is None:
+            return
 
         for task_name in self.__config:
             self.log.debug(f"Processing task: {task_name}")

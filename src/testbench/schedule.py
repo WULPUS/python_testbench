@@ -19,8 +19,14 @@ class TestbenchSchedule:
 
         self.__current = self.__get_lowest(0)
 
+        if self.__current is None:
+            self.log.warning("Schedule is empty, no tasks to run")
+
     def __parse_schedule(self) -> None:
         self.log.debug("Parsing schedule configuration")
+
+        if self.__config is None:
+            return
 
         for task_name in self.__config:
             self.log.debug(f"Processing task: {task_name}")

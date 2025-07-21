@@ -17,7 +17,10 @@ class TestbenchFiles:
         self.__files: dict[str, dict] = {}
         self.__discover()
 
-        self.log.info(f"Discovered {len(self.__files)} file types")
+        if not self.__files:
+            self.log.warning("No files found in the specified directory")
+        else:
+            self.log.info(f"Discovered {len(self.__files)} file types")
 
     # ------------------------------------------------------------------
     def __discover(self) -> None:

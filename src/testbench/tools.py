@@ -17,10 +17,13 @@ class TestbenchTools:
         self.__tools: dict[str, dict[str, dict]] = {}
         self.__discover()
 
-        self.log.info(
-            f"Discovered {len(self.__tools)} tool types "
-            f"with {sum(len(v) for v in self.__tools.values())} tools"
-        )
+        if not self.__tools:
+            self.log.warning("No tools found in the specified directory")
+        else:
+            self.log.info(
+                f"Discovered {len(self.__tools)} tool types "
+                f"with {sum(len(v) for v in self.__tools.values())} tools"
+            )
 
     def __discover(self) -> None:
         for type_dir in filter(Path.is_dir, self.__root.iterdir()):
