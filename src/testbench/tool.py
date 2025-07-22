@@ -1,6 +1,6 @@
 import subprocess
 import time
-from typing import Any
+from typing import Any, Optional
 import logging
 
 
@@ -74,10 +74,14 @@ class Tool:
                 stdout, stderr = result.communicate()
             raise Exception(f"{type} command timed out")
 
-    def ensure(self, loc: str, variable: str) -> Any:
+    def ensure(self, loc: str, variable: str, default: Optional[Any] = None) -> Any:
         match loc:
             case "env":
                 if variable not in self.env:
+                    if default is not None:
+                        self.log.debug(f"Using default value for {variable}: {default}")
+                        return default
+
                     raise Exception(
                         f"Tool {self.type}/{self.type_name} for {self.task_name} requires {variable} in environment"
                     )
@@ -86,6 +90,10 @@ class Tool:
 
             case "params":
                 if variable not in self.params:
+                    if default is not None:
+                        self.log.debug(f"Using default value for {variable}: {default}")
+                        return default
+
                     raise Exception(
                         f"Tool {self.type}/{self.type_name} for {self.task_name} requires {variable} in params"
                     )
