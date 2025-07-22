@@ -56,9 +56,9 @@ class TestbenchSchedule:
                     raise KeyError(
                         f'Tool type "{step_tool_type}" not found in tools of task "{task_name}"'
                     )
-                if step_tool != task["tools"][step_tool_type]["name"]:
+                if step_tool not in task["tools"][step_tool_type]:
                     raise KeyError(
-                        f'No tool of type "{step_tool_type}" with name "{step_tool}" found in task "{task_name}"'
+                        f'No tool "{step_tool}" of type "{step_tool_type}" found in task "{task_name}"'
                     )
                 if (
                     step_name
@@ -81,9 +81,9 @@ class TestbenchSchedule:
                     raise KeyError(
                         f'Tool type "{step_tool_type}" not found in tools of task "{task_name}"'
                     )
-                if step_tool != task["tools"][step_tool_type]["name"]:
+                if step_tool not in task["tools"][step_tool_type]:
                     raise KeyError(
-                        f'No tool of type "{step_tool_type}" with name "{step_tool}" found in task "{task_name}"'
+                        f'No tool "{step_tool}" of type "{step_tool_type}" found in task "{task_name}"'
                     )
                 if (
                     step_name
@@ -172,15 +172,15 @@ class TestbenchSchedule:
             self.log.info(f"Running step: {task_name}/{step['type']}/{step['func']}")
             start_time = time.time()
             try:
-                getattr(task["tools"][step["type"]], step["func"])()
+                getattr(task["tools"][step["type"]][step["tool"]], step["func"])()
                 end_time = time.time()
                 self.log.info(
-                    f"Done ({end_time - start_time:.2f}s): {task_name}/{step['type']}/{step['func']}"
+                    f"Done ({end_time - start_time:.2f}s): {task_name}/{step['type']}/{step['tool']}/{step['func']}"
                 )
             except Exception as e:
                 end_time = time.time()
                 self.log.error(
-                    f"Failed ({end_time - start_time:.2f}s): {task_name}/{step['type']}/{step['func']} ({e})"
+                    f"Failed ({end_time - start_time:.2f}s): {task_name}/{step['type']}/{step['tool']}/{step['func']} ({e})"
                 )
                 break
 
@@ -188,13 +188,13 @@ class TestbenchSchedule:
             start_time = time.time()
             try:
                 start_time = time.time()
-                getattr(task["tools"][step["type"]], step["func"])()
+                getattr(task["tools"][step["type"]][step["tool"]], step["func"])()
                 end_time = time.time()
                 self.log.info(
-                    f"Cleaned ({end_time - start_time:.2f}s): {task_name}/{step['type']}/{step['func']}"
+                    f"Cleaned ({end_time - start_time:.2f}s): {task_name}/{step['type']}/{step['tool']}/{step['func']}"
                 )
             except Exception as e:
                 end_time = time.time()
                 self.log.error(
-                    f"Clean failed ({end_time - start_time:.2f}s): {task_name}/{step['type']}/{step['func']} ({e})"
+                    f"Clean failed ({end_time - start_time:.2f}s): {task_name}/{step['type']}/{step['tool']}/{step['func']} ({e})"
                 )

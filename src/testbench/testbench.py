@@ -173,9 +173,15 @@ class Testbench:
                 task["files"][file] = file_instance
 
             # Instantiate only tools referenced in the schedule steps
-            needed_tool_types = {step["type"] for step in task.get("steps", [])}
-            for tool_type in needed_tool_types:
-                tool_info = task["tools"].get(tool_type)
+            needed_tools = {
+                (step["type"], step["tool"]) for step in task.get("steps", [])
+            }
+            for tool_type, tool_name in needed_tools:
+                self.log.debug(
+                    f"Initializing tool: {tool_type}/{tool_name} for task: {task_name}"
+                )
+
+                tool_info = task["tools"][tool_type][tool_name]
                 if not tool_info:
                     raise KeyError(
                         f'Tool type "{tool_type}" not configured in task "{task_name}"'
@@ -183,8 +189,14 @@ class Testbench:
                 tool_name = tool_info["name"]
                 tool_params = tool_info["params"]
                 tool_cls = self.__tools[tool_type][tool_name]["cls"]
-                tool_instance = tool_cls(task, tool_params, self.__env)
-                task["tools"][tool_type] = tool_instance
+                try:
+                    tool_instance = tool_cls(task, tool_params, self.__env)
+                except Exception as e:
+                    raise Exception(
+                        f"Error initializing tool {tool_type}/{tool_name} for task {task_name}: {e}"
+                    ) from e
+
+                task["tools"][tool_type][tool_name] = tool_instance
 
                 for step in task.get("steps", []):
                     if step["type"] == tool_type and step["tool"] == tool_name:

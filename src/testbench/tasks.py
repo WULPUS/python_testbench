@@ -57,20 +57,23 @@ class TestbenchTasks:
                         f'Tool type "{tool_type}" not found in tools configuration'
                     )
 
-                if "name" not in task["tools"][tool_type]:
-                    raise KeyError(
-                        f'No name found in "{tool_type}" tool configuration for task "{task}"'
-                    )
-                tool_name = task["tools"][tool_type]["name"]
-                if tool_name not in self.__tools[tool_type]:
-                    raise KeyError(
-                        f'Tool "{tool_name}" not found in tools configuration'
-                    )
+                for tool_name in task["tools"][tool_type]:
+                    if tool_name not in self.__tools[tool_type]:
+                        raise KeyError(
+                            f'Tool "{tool_name}" not found in tools configuration'
+                        )
 
-                tool_params = task["tools"][tool_type]
-                tool_params.pop("name")
+                    tool_params = task["tools"][tool_type][tool_name]
+                    if tool_params is None:
+                        tool_params = {}
 
-                task_tools[tool_type] = {"name": tool_name, "params": tool_params}
+                    if tool_type not in task_tools:
+                        task_tools[tool_type] = {}
+
+                    task_tools[tool_type][tool_name] = {
+                        "name": tool_name,
+                        "params": tool_params,
+                    }
 
             task_files = {}
             if "files" in task:
