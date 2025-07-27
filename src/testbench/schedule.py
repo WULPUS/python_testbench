@@ -169,7 +169,9 @@ class TestbenchSchedule:
         self.log.info(f"Running task: {task_name}")
 
         for step in task["steps"]:
-            self.log.info(f"Running step: {task_name}/{step['type']}/{step['func']}")
+            self.log.info(
+                f"Running step: {task_name}/{step['type']}/{step['tool']}/{step['func']}"
+            )
             start_time = time.time()
             try:
                 getattr(task["tools"][step["type"]][step["tool"]], step["func"])()

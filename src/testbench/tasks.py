@@ -15,7 +15,7 @@ class TestbenchTasks:
             self.__tasks = {}
             self.__parse_tasks()
         except Exception as e:
-            raise ValueError(f"Error setting up tasks: {e}")
+            raise ValueError(f"Error parsing tasks: {e}")
 
         if not self.__tasks:
             self.log.warning("No task configurations provided")
