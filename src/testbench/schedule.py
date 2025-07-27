@@ -101,10 +101,18 @@ class TestbenchSchedule:
             self.__tasks[task_name]["steps"] = task_steps_list
             self.__tasks[task_name]["cleanup"] = task_cleanup_list
 
+        for task_name in self.__tasks:
+            if "order" not in self.__tasks[task_name]:
+                self.log.warning(f'Task "{task_name}" included but not in schedule')
+                continue
+
     def __get_lowest(self, min: int) -> Optional[int]:
         # Get lowest order task above min
         lowest = None
         for task_name in self.__tasks:
+            if "order" not in self.__tasks[task_name]:
+                continue
+
             task_order = self.__tasks[task_name]["order"]
             if task_order < min:
                 continue
@@ -116,6 +124,9 @@ class TestbenchSchedule:
     def __get_tasks(self, order: int) -> dict:
         tasks = {}
         for task_name in self.__tasks:
+            if "order" not in self.__tasks[task_name]:
+                continue
+
             task_order = self.__tasks[task_name]["order"]
             if task_order == order:
                 tasks[task_name] = self.__tasks[task_name]
